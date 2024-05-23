@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>Calculater</title>
+    <style>
+      body {
+        background-color: #E2E2E2;
+      }
+      table {
+        background-color: white;
+        width: 30%;
+        border-spacing: 10px;
+        border-radius: 5px;
+        box-shadow: rgba(0, 0, 0, 0.077) 1.95px 1.95px 2.6px;
+        border: 1px solid #99999979;
+      }
+
+      thead td {
+        margin-top: 10px;
+        padding: 20px;
+        background-color: black;
+        color: white;
+      }
+
+      thead td div {
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      td {
+        padding: 10px;
+      }
+
+      table tr td {
+        font-weight: 700;
+        font-size: 22px;
+        border-radius: 4px;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      }
+
+      table tr {
+        border: 1px solid #99999923;
+      }
+
+      #eqal-design {
+        background-color: #a10cf2;
+        color: white;
+      }
+
+      .same-design {
+        /* background-color: #eee; */
+        font-weight: 200;
+      }
+
+      table td:hover {
+        cursor: alias;
+      }
+      tbody td:hover {
+        background-color: #e9e4f0;
+      }
+    </style>
+  </head>
+  <body>
+    <table border="1" align="center">
+      <thead>
+        <tr align="right">
+          <td colspan="4"><div id="main-box">0</div></td>
+        </tr>
+      </thead>
+
+      <tbody align="center" cellspace="10">
+        <tr>
+          <td width="25%" class="same-design"><div>%</div></td>
+          <td width="25%" class="same-design"><div id="clear">CE</div></td>
+          <td width="25%" class="same-design"><div ><i class="fa-solid fa-xmark" id="icon"></i></div></td>
+          <td width="25%" class="same-design"><div>/</div></td>
+        </tr>
+
+        <tr>
+          <td><div>7</div></td>
+          <td><div>8</div></td>
+          <td><div>9</div></td>
+          <td class="same-design"><div>*</div></td>
+        </tr>
+
+        <tr>
+          <td><div>4</div></td>
+          <td><div>5</div></td>
+          <td><div>6</div></td>
+          <td class="same-design"><div>-</div></td>
+        </tr>
+
+        <tr>
+          <td><div>1</div></td>
+          <td><div>2</div></td>
+          <td><div>3</div></td>
+          <td class="same-design"><div>+</div></td>
+        </tr>
+
+        <tr>
+          <td><div>00</div></td>
+          <td><div>0</div></td>
+          <td><div>.</div></td>
+          <td id="eqal-design" class="same-design"><div>=</div></td>
+        </tr>
+      </tbody>
+
+      <audio src="mixkit-interface-click-1126.wav" id="sound"></audio>
+    </table>
+
+    <script>
+       const btns = document.querySelectorAll('tbody div');
+       const mainbox = document.querySelector('#main-box');
+       const clear = document.querySelector('#clear');
+       const sound = document.querySelector('#sound')
+
+       let str= '';
+
+      function prepare(e){
+        sound.play();
+        if(e.target.innerText == '='){
+           mainbox.innerText = eval(mainbox.innerText)
+        }
+        else if(e.target.innerText == 'CE'){
+          mainbox.innerText ='0'
+           str = '';
+        }
+        else if(e.target.id == 'icon'){
+          str = str.substring(0, str.length-1);
+          mainbox.innerText=str;
+        }
+        else{
+           str = str + e.target.innerText;
+           mainbox.innerText = str;
+        } 
+      }
+
+      function mousedown(event){
+        event.target.style.boxShadow = 'none';
+      
+      }
+
+
+      function mouseUp(event){
+        event.target.style.boxShadow = 'rgba(0, 0, 0, 0.24) 0px 3px 8px;';
+      }
+
+       function btnclicked(x){
+        // console.log("hii");
+          x.onclick=prepare;
+          x.onmousedown=mousedown;
+          x.onmouseup=mouseUp;
+       }
+
+       btns.forEach(btnclicked);
+    </script>
+
+  </body>
+</html>
